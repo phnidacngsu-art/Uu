@@ -112,6 +112,33 @@ export interface OutfitCombination {
   explanation: string;
   luckyHighlights: string[];
   kaliExcludedCount: number;
+  mockupImage?: string;
+}
+
+export interface CuratedSimulationOutfit {
+  id: string;
+  title: string;
+  tagline: string;
+  style: StyleOption;
+  occasion: OccasionOption;
+  harmonyScore: number;
+  harmonyType: string;
+  image: string;
+  palette: {
+    main: { name: string; hex: string; roleDesc: string };
+    secondary: { name: string; hex: string; roleDesc: string };
+    accent: { name: string; hex: string; roleDesc: string };
+    neutral: { name: string; hex: string; roleDesc: string };
+  };
+  garments: {
+    top: string;
+    bottom: string;
+    shoes: string;
+    bag: string;
+    accessories: string;
+  };
+  stylingTip: string;
+  suitableDay: string;
 }
 
 export interface MatchResultResponse {

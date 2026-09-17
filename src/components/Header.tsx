@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, Sparkles, User, Shield, LogOut } from 'lucide-react';
+import { Bell, Sparkles, User, Shield, LogOut, Shuffle } from 'lucide-react';
 import { UserProfile } from '../types';
 
 interface HeaderProps {
@@ -11,6 +11,7 @@ interface HeaderProps {
   isAdminView: boolean;
   onToggleAdminView: () => void;
   onLogout: () => void;
+  onOpenRoulette?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -22,6 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
   isAdminView,
   onToggleAdminView,
   onLogout,
+  onOpenRoulette,
 }) => {
   return (
     <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-stone-200/80 transition-all">
@@ -52,6 +54,18 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2">
+          {/* Lucky Outfit Roulette Button */}
+          {onOpenRoulette && (
+            <button
+              onClick={onOpenRoulette}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:opacity-95 text-white shadow-xs transition-all cursor-pointer"
+              title="หมุนสุ่มชุดแต่งตัว (Outfit Roulette)"
+            >
+              <Shuffle className="w-3.5 h-3.5 animate-spin-slow" />
+              <span className="hidden xs:inline sm:inline">สุ่มชุดแมทช์</span>
+            </button>
+          )}
+
           {/* Admin Switch Button */}
           <button
             onClick={onToggleAdminView}

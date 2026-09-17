@@ -11,8 +11,11 @@ import {
   ShoppingBag,
   Watch,
   Copy,
+  Layers,
+  Eye,
 } from 'lucide-react';
 import { OutfitCombination, OccasionOption, StyleOption } from '../types';
+import { OutfitSimulator } from './OutfitSimulator';
 
 interface OutfitVisualCardProps {
   combination: OutfitCombination;
@@ -23,6 +26,7 @@ interface OutfitVisualCardProps {
   isSaved?: boolean;
   onShare?: (comb: OutfitCombination) => void;
   onTryAnother?: () => void;
+  onApplyCuratedStyle?: (style: StyleOption, occasion: OccasionOption) => void;
 }
 
 export const OutfitVisualCard: React.FC<OutfitVisualCardProps> = ({
@@ -34,8 +38,10 @@ export const OutfitVisualCard: React.FC<OutfitVisualCardProps> = ({
   isSaved = false,
   onShare,
   onTryAnother,
+  onApplyCuratedStyle,
 }) => {
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
+  const [showSimulator, setShowSimulator] = useState(true);
 
   const copyHex = (hex: string) => {
     navigator.clipboard?.writeText(hex);
@@ -143,6 +149,53 @@ export const OutfitVisualCard: React.FC<OutfitVisualCardProps> = ({
           ))}
         </div>
       </div>
+
+      {/* View Toggle Bar (Lookbook Simulation vs Garment List) */}
+      <div className="px-5 py-3 bg-stone-100/70 border-b border-stone-200/80 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold text-stone-700">มุมมองการแสดงผล:</span>
+          <div className="inline-flex p-0.5 rounded-xl bg-white border border-stone-200 text-xs">
+            <button
+              onClick={() => setShowSimulator(true)}
+              className={`px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                showSimulator
+                  ? 'bg-rose-600 text-white shadow-2xs'
+                  : 'text-stone-600 hover:text-stone-900'
+              }`}
+            >
+              <Eye className="w-3.5 h-3.5" />
+              <span>ชุดจำลองเสมือนจริง</span>
+            </button>
+            <button
+              onClick={() => setShowSimulator(false)}
+              className={`px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                !showSimulator
+                  ? 'bg-rose-600 text-white shadow-2xs'
+                  : 'text-stone-600 hover:text-stone-900'
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>ชิ้นเสื้อผ้าแยกส่วน</span>
+            </button>
+          </div>
+        </div>
+
+        <span className="hidden sm:inline-block text-[11px] text-stone-500 font-medium">
+          {showSimulator ? '✨ ภาพจริงและหุ่นจำลอง 2D' : '📋 รายละเอียด 5 ชิ้น'}
+        </span>
+      </div>
+
+      {/* Simulator or Breakdown */}
+      {showSimulator ? (
+        <div className="p-4 sm:p-5 bg-stone-950">
+          <OutfitSimulator
+            combination={combination}
+            occasion={occasion}
+            style={style}
+            onApplyCuratedStyle={onApplyCuratedStyle}
+          />
+        </div>
+      ) : null}
 
       {/* Outfit Breakdown Grid */}
       <div className="p-5 space-y-3">

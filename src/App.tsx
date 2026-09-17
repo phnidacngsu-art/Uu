@@ -5,6 +5,7 @@ import { BottomNav, TabKey } from './components/BottomNav';
 import { WelcomeModal } from './components/WelcomeModal';
 import { AuthModal } from './components/AuthModal';
 import { NotificationModal } from './components/NotificationModal';
+import { OutfitRouletteModal } from './components/OutfitRouletteModal';
 import { ToastContainer, ToastMessage } from './components/Toast';
 import { HomeView } from './views/HomeView';
 import { MatchView } from './views/MatchView';
@@ -13,7 +14,13 @@ import { HistoryView } from './views/HistoryView';
 import { ProfileView } from './views/ProfileView';
 import { AdminView } from './views/AdminView';
 import { api } from './services/api';
-import { NotificationItem, OutfitCombination, UserProfile } from './types';
+import {
+  NotificationItem,
+  OutfitCombination,
+  UserProfile,
+  StyleOption,
+  OccasionOption,
+} from './types';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(() =>
@@ -26,11 +33,14 @@ export default function App() {
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+  const [isRouletteModalOpen, setIsRouletteModalOpen] = useState(false);
 
   // Data state
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [savedOutfitIds, setSavedOutfitIds] = useState<Set<string>>(new Set());
   const [matchInitialDate, setMatchInitialDate] = useState<string | undefined>(undefined);
+  const [matchInitialStyle, setMatchInitialStyle] = useState<StyleOption | undefined>(undefined);
+  const [matchInitialOccasion, setMatchInitialOccasion] = useState<OccasionOption | undefined>(undefined);
 
   // Toasts
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
@@ -139,8 +149,14 @@ export default function App() {
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
-  const navigateToMatch = (targetDate?: string) => {
+  const navigateToMatch = (
+    targetDate?: string,
+    style?: StyleOption,
+    occasion?: OccasionOption
+  ) => {
     setMatchInitialDate(targetDate);
+    setMatchInitialStyle(style);
+    setMatchInitialOccasion(occasion);
     setCurrentTab('match');
   };
 
@@ -162,6 +178,7 @@ export default function App() {
         isAdminView={isAdminView}
         onToggleAdminView={() => setIsAdminView(!isAdminView)}
         onLogout={handleLogout}
+        onOpenRoulette={() => setIsRouletteModalOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -188,15 +205,19 @@ export default function App() {
                   onSaveOutfit={handleSaveOutfit}
                   savedOutfitIds={savedOutfitIds}
                   onShowToast={showToast}
+                  onOpenRoulette={() => setIsRouletteModalOpen(true)}
                 />
               )}
               {currentTab === 'match' && (
                 <MatchView
                   currentUser={currentUser}
                   initialTargetDate={matchInitialDate}
+                  initialStyle={matchInitialStyle}
+                  initialOccasion={matchInitialOccasion}
                   onSaveOutfit={handleSaveOutfit}
                   savedOutfitIds={savedOutfitIds}
                   onShowToast={showToast}
+                  onOpenRoulette={() => setIsRouletteModalOpen(true)}
                 />
               )}
               {currentTab === 'saved' && (
@@ -263,6 +284,20 @@ export default function App() {
         notifications={notifications}
         onMarkRead={handleMarkNotificationRead}
         onDelete={handleDeleteNotification}
+      />
+
+      {/* Outfit Roulette Modal (หมุนสุ่มหาชุดแมทช์) */}
+      <OutfitRouletteModal
+        isOpen={isRouletteModalOpen}
+        onClose={() => setIsRouletteModalOpen(false)}
+        currentUser={currentUser}
+        onSelectResultOutfit={(comb, style, occasion) => {
+          setMatchInitialStyle(style);
+          setMatchInitialOccasion(occasion);
+          setCurrentTab('match');
+          showToast(`เลือกสไตล์ ${style} สำหรับ ${occasion} แล้ว ✨`, 'success');
+        }}
+        onSaveOutfit={handleSaveOutfit}
       />
     </div>
   );

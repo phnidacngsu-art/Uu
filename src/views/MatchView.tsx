@@ -11,6 +11,7 @@ import {
   Heart,
   X,
   ShieldAlert,
+  Shuffle,
 } from 'lucide-react';
 import {
   ClothingType,
@@ -28,9 +29,12 @@ import { api } from '../services/api';
 interface MatchViewProps {
   currentUser: UserProfile | null;
   initialTargetDate?: string;
+  initialStyle?: StyleOption;
+  initialOccasion?: OccasionOption;
   onSaveOutfit: (comb: OutfitCombination) => void;
   savedOutfitIds: Set<string>;
   onShowToast: (msg: string, type?: 'success' | 'error' | 'info') => void;
+  onOpenRoulette?: () => void;
 }
 
 const STYLES: StyleOption[] = [
@@ -63,9 +67,12 @@ const OCCASIONS: OccasionOption[] = [
 export const MatchView: React.FC<MatchViewProps> = ({
   currentUser,
   initialTargetDate,
+  initialStyle,
+  initialOccasion,
   onSaveOutfit,
   savedOutfitIds,
   onShowToast,
+  onOpenRoulette,
 }) => {
   // Inputs
   const [birthday, setBirthday] = useState(currentUser?.birthday || '1998-05-20');
@@ -76,9 +83,19 @@ export const MatchView: React.FC<MatchViewProps> = ({
     initialTargetDate || new Date().toISOString().split('T')[0]
   );
   const [selectedStyle, setSelectedStyle] = useState<StyleOption>(
-    currentUser?.preferredStyle || 'Minimal'
+    initialStyle || currentUser?.preferredStyle || 'Minimal'
   );
-  const [selectedOccasion, setSelectedOccasion] = useState<OccasionOption>('วันสบาย ๆ');
+  const [selectedOccasion, setSelectedOccasion] = useState<OccasionOption>(
+    initialOccasion || 'วันสบาย ๆ'
+  );
+
+  useEffect(() => {
+    if (initialStyle) setSelectedStyle(initialStyle);
+  }, [initialStyle]);
+
+  useEffect(() => {
+    if (initialOccasion) setSelectedOccasion(initialOccasion);
+  }, [initialOccasion]);
   const [clothingTypes, setClothingTypes] = useState<ClothingType[]>([
     'top',
     'bottom',
@@ -395,12 +412,12 @@ export const MatchView: React.FC<MatchViewProps> = ({
           </div>
         </div>
 
-        {/* Submit Button */}
-        <div className="pt-2">
+        {/* Submit & Randomizer Buttons */}
+        <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
           <button
             onClick={handleGenerateOutfit}
             disabled={loading}
-            className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 text-white font-bold text-base shadow-lg hover:shadow-rose-500/25 hover:opacity-95 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            className="flex-1 w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 text-white font-bold text-base shadow-lg hover:shadow-rose-500/25 hover:opacity-95 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {loading ? (
               <>
@@ -414,6 +431,17 @@ export const MatchView: React.FC<MatchViewProps> = ({
               </>
             )}
           </button>
+
+          {onOpenRoulette && (
+            <button
+              type="button"
+              onClick={onOpenRoulette}
+              className="w-full sm:w-auto py-4 px-6 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-base shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer border border-stone-800"
+            >
+              <Shuffle className="w-5 h-5 text-amber-400 animate-spin-slow" />
+              <span>หมุนสุ่มชุด 🎰</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -460,6 +488,11 @@ export const MatchView: React.FC<MatchViewProps> = ({
               onShare={handleShare}
               onTryAnother={() => {
                 setSelectedCombIndex((prev) => (prev + 1) % result.combinations.length);
+              }}
+              onApplyCuratedStyle={(s, o) => {
+                setSelectedStyle(s);
+                setSelectedOccasion(o);
+                onShowToast(`เลือกสไตล์ ${s} สำหรับ ${o} แล้ว`, 'info');
               }}
             />
           )}

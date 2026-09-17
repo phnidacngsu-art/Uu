@@ -8,19 +8,38 @@ import {
   ChevronRight,
   CheckCircle2,
   Share2,
+  Palette,
+  Eye,
+  Shirt,
+  Shuffle,
 } from 'lucide-react';
-import { ColorRule, DayOfWeekKey, MatchResultResponse, UserProfile, DAY_INFO_LIST } from '../types';
+import {
+  ColorRule,
+  DayOfWeekKey,
+  MatchResultResponse,
+  UserProfile,
+  DAY_INFO_LIST,
+  StyleOption,
+  OccasionOption,
+  CuratedSimulationOutfit,
+} from '../types';
 import { ColorCard } from '../components/ColorCard';
 import { OutfitVisualCard } from '../components/OutfitVisualCard';
+import { CURATED_SIMULATION_OUTFITS } from '../data/outfitSimulations';
 import { api } from '../services/api';
 
 interface HomeViewProps {
   currentUser: UserProfile | null;
-  onNavigateToMatch: (initialTargetDate?: string) => void;
+  onNavigateToMatch: (
+    initialTargetDate?: string,
+    style?: StyleOption,
+    occasion?: OccasionOption
+  ) => void;
   onOpenAuth: () => void;
   onSaveOutfit: (comb: any) => void;
   savedOutfitIds: Set<string>;
   onShowToast: (msg: string, type?: 'success' | 'error' | 'info') => void;
+  onOpenRoulette?: () => void;
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
@@ -30,11 +49,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onSaveOutfit,
   savedOutfitIds,
   onShowToast,
+  onOpenRoulette,
 }) => {
   const [todayDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [selectedDate, setSelectedDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [todayMatchResult, setTodayMatchResult] = useState<MatchResultResponse | null>(null);
   const [loading, setLoading] = useState(false);
+  const [selectedCuratedPreview, setSelectedCuratedPreview] = useState<CuratedSimulationOutfit | null>(null);
 
   // Fetch match for the dashboard
   useEffect(() => {
@@ -146,6 +167,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <ArrowRight className="w-4 h-4" />
             </button>
 
+            {onOpenRoulette && (
+              <button
+                onClick={onOpenRoulette}
+                className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white text-stone-900 font-bold text-sm shadow-md hover:bg-stone-50 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer border border-white/20"
+              >
+                <Shuffle className="w-4 h-4 text-rose-600 animate-spin-slow" />
+                <span>🎰 หมุนสุ่มหาชุดแมทช์</span>
+              </button>
+            )}
+
             {!currentUser && (
               <button
                 onClick={onOpenAuth}
@@ -250,7 +281,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </span>
               </h2>
               <p className="text-xs text-stone-500">
-                ตัวอย่างการจับคู่ชิ้นเสื้อผ้า เสื้อ กางเกง รองเท้า กระเป๋า และเครื่องประดับ
+                ตัวอย่างการจับคู่ชิ้นเสื้อผ้า เสื้อ กางเกง รองเท้า กระเป๋า และเครื่องประดับ พร้อมชุดจำลองเสมือนจริง
               </p>
             </div>
             <button
@@ -271,9 +302,139 @@ export const HomeView: React.FC<HomeViewProps> = ({
             isSaved={savedOutfitIds.has(todayMatchResult.combinations[0].id)}
             onShare={handleShare}
             onTryAnother={() => onNavigateToMatch(selectedDate)}
+            onApplyCuratedStyle={(s, o) => onNavigateToMatch(selectedDate, s, o)}
           />
         </section>
       )}
+
+      {/* Curated Stylish Outfit Simulations Showcase */}
+      <section className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-600 text-xs font-bold mb-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>LOOKBOOK & SIMULATION STUDIO</span>
+            </div>
+            <h2 className="text-xl font-bold text-stone-900">
+              ชุดจำลองที่แมทช์กันแล้วดูดีมีสไตล์ ✨
+            </h2>
+            <p className="text-xs text-stone-500">
+              คอลเลกชันชุดตัวอย่างจัดวางตามสูตร Color Harmony และสัดส่วน 60-30-10 แต่งแล้วสวยชิคในทุกโอกาส
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            {onOpenRoulette && (
+              <button
+                onClick={onOpenRoulette}
+                className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+              >
+                <Shuffle className="w-3.5 h-3.5" />
+                <span>หมุนสุ่มจากตู้ชุด</span>
+              </button>
+            )}
+            <button
+              onClick={() => onNavigateToMatch(selectedDate)}
+              className="text-xs font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1 cursor-pointer"
+            >
+              <span>แมทช์ชุดของฉันเอง</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {CURATED_SIMULATION_OUTFITS.map((item) => (
+            <div
+              key={item.id}
+              className="group bg-white rounded-3xl border border-stone-200 shadow-xs overflow-hidden hover:shadow-md hover:border-rose-300 transition-all flex flex-col justify-between"
+            >
+              <div>
+                {/* Photo container */}
+                <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover object-center group-hover:scale-104 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent pointer-events-none" />
+
+                  <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-[11px] font-semibold text-white">
+                    {item.style} • {item.occasion}
+                  </div>
+
+                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-emerald-600 text-[11px] font-bold text-white shadow-xs">
+                    Harmony {item.harmonyScore}%
+                  </div>
+
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <h3 className="text-sm font-bold text-white drop-shadow-xs">{item.title}</h3>
+                    <p className="text-xs text-stone-200 line-clamp-1">{item.tagline}</p>
+                  </div>
+                </div>
+
+                {/* Content body */}
+                <div className="p-4 space-y-3">
+                  {/* Palette Swatches */}
+                  <div className="space-y-1.5">
+                    <div className="text-[11px] font-semibold text-stone-400 uppercase tracking-wider">
+                      คุมโทนสี (Color Palette):
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-stone-50 border border-stone-200 text-[11px] text-stone-700">
+                        <span
+                          className="w-3 h-3 rounded-full border border-black/10 shrink-0"
+                          style={{ backgroundColor: item.palette.main.hex }}
+                        />
+                        <span className="font-medium truncate max-w-[90px]">{item.palette.main.name}</span>
+                      </div>
+                      <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-stone-50 border border-stone-200 text-[11px] text-stone-700">
+                        <span
+                          className="w-3 h-3 rounded-full border border-black/10 shrink-0"
+                          style={{ backgroundColor: item.palette.secondary.hex }}
+                        />
+                        <span className="font-medium truncate max-w-[90px]">{item.palette.secondary.name}</span>
+                      </div>
+                      <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-stone-50 border border-stone-200 text-[11px] text-stone-700">
+                        <span
+                          className="w-3 h-3 rounded-full border border-black/10 shrink-0"
+                          style={{ backgroundColor: item.palette.accent.hex }}
+                        />
+                        <span className="font-medium truncate max-w-[80px]">Accent</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Garment Summary */}
+                  <div className="p-2.5 rounded-xl bg-stone-50/80 border border-stone-200/60 text-[11px] text-stone-600 space-y-1">
+                    <div className="truncate">
+                      <strong>ท่อนบน:</strong> {item.garments.top}
+                    </div>
+                    <div className="truncate">
+                      <strong>ท่อนล่าง:</strong> {item.garments.bottom}
+                    </div>
+                    <div className="truncate">
+                      <strong>กระเป๋า/รองเท้า:</strong> {item.garments.bag}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card Footer Actions */}
+              <div className="p-4 pt-0">
+                <button
+                  onClick={() => onNavigateToMatch(selectedDate, item.style, item.occasion)}
+                  className="w-full py-2.5 px-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-xs group-hover:bg-rose-600 cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>แมทช์ลุคนี้ตามสีวันเกิดฉัน</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* How It Works Section (Landing Information for Users) */}
       <section className="bg-white rounded-3xl border border-stone-200 p-6 shadow-xs">
