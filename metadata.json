@@ -1,0 +1,6 @@
+{
+  "name": "Daily Color Match",
+  "description": "ระบบแนะนำสีเสื้อผ้าและการจับคู่สีชุดตามวันเกิดและวันที่แต่งตัว พร้อมระบบตัดสีกาลกิณีและจับคู่สีตามหลัก Color Harmony",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
