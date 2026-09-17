@@ -593,6 +593,328 @@
   "savedOutfits": [],
   "matchHistory": [
     {
+      "id": "match-1789628795920",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T07:06:35.920Z"
+    },
+    {
+      "id": "match-1789628215155",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:56:55.155Z"
+    },
+    {
+      "id": "match-1789628213248",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Romantic",
+      "occasion": "ออกเดท",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:56:53.248Z"
+    },
+    {
+      "id": "match-1789628210841",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:56:50.841Z"
+    },
+    {
+      "id": "match-1789628191364",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:56:31.364Z"
+    },
+    {
+      "id": "match-1789628191347",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:56:31.347Z"
+    },
+    {
+      "id": "match-1789627565656",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Casual",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:46:05.657Z"
+    },
+    {
+      "id": "match-1789627558027",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:45:58.027Z"
+    },
+    {
+      "id": "match-1789627558001",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:45:58.001Z"
+    },
+    {
+      "id": "match-1789627552901",
+      "userId": "anonymous",
+      "birthDayOfWeek": "saturday",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#7C3AED",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:45:52.901Z"
+    },
+    {
+      "id": "match-1789626874260",
+      "userId": "anonymous",
+      "birthDayOfWeek": "saturday",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#7C3AED",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:34:34.260Z"
+    },
+    {
+      "id": "match-1789626858985",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:34:18.985Z"
+    },
+    {
+      "id": "match-1789626858970",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:34:18.970Z"
+    },
+    {
+      "id": "match-1789626850082",
+      "userId": "anonymous",
+      "birthDayOfWeek": "friday",
+      "targetDate": "2026-09-18",
+      "targetDayOfWeek": "friday",
+      "style": "Sport",
+      "occasion": "ประชุม",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#0284C7",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:34:10.082Z"
+    },
+    {
+      "id": "match-1789626849668",
+      "userId": "anonymous",
+      "birthDayOfWeek": "friday",
+      "targetDate": "2026-09-18",
+      "targetDayOfWeek": "friday",
+      "style": "Sport",
+      "occasion": "ประชุม",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#0284C7",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:34:09.668Z"
+    },
+    {
+      "id": "match-1789626849458",
+      "userId": "anonymous",
+      "birthDayOfWeek": "friday",
+      "targetDate": "2026-09-18",
+      "targetDayOfWeek": "friday",
+      "style": "Sport",
+      "occasion": "ประชุม",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#0284C7",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:34:09.458Z"
+    },
+    {
+      "id": "match-1789626848815",
+      "userId": "anonymous",
+      "birthDayOfWeek": "friday",
+      "targetDate": "2026-09-18",
+      "targetDayOfWeek": "friday",
+      "style": "Sport",
+      "occasion": "ประชุม",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#0284C7",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:34:08.815Z"
+    },
+    {
+      "id": "match-1789626847764",
+      "userId": "anonymous",
+      "birthDayOfWeek": "friday",
+      "targetDate": "2026-09-18",
+      "targetDayOfWeek": "friday",
+      "style": "Sport",
+      "occasion": "ประชุม",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#0284C7",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:34:07.764Z"
+    },
+    {
+      "id": "match-1789626838889",
+      "userId": "anonymous",
+      "birthDayOfWeek": "friday",
+      "targetDate": "2026-09-18",
+      "targetDayOfWeek": "friday",
+      "style": "Sport",
+      "occasion": "ประชุม",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#0284C7",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:33:58.889Z"
+    },
+    {
+      "id": "match-1789626572777",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:29:32.777Z"
+    },
+    {
+      "id": "match-1789626572775",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:29:32.775Z"
+    },
+    {
+      "id": "match-1789626556786",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:29:16.786Z"
+    },
+    {
+      "id": "match-1789626556774",
+      "userId": "anonymous",
+      "birthDayOfWeek": "wednesday_day",
+      "targetDate": "2026-09-17",
+      "targetDayOfWeek": "thursday",
+      "style": "Minimal",
+      "occasion": "วันสบาย ๆ",
+      "combinationId": "comb-harmony-1",
+      "topColor": "#10B981",
+      "bottomColor": "#FFFFFF",
+      "score": 95,
+      "timestamp": "2026-09-17T06:29:16.774Z"
+    },
+    {
       "id": "match-1789626434653",
       "userId": "anonymous",
       "birthDayOfWeek": "saturday",
@@ -642,6 +964,168 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log-1789629118457-6dmo",
+      "userId": "user-1789629118457",
+      "userName": "Phnida",
+      "action": "USER_REGISTER",
+      "details": "สมาชิกใหม่ลงทะเบียน: Phnida (testuser99@example.com)",
+      "timestamp": "2026-09-17T07:11:58.457Z"
+    },
+    {
+      "id": "log-1789628863363-zs6x",
+      "userId": "user-1789628863363",
+      "userName": "Phnidacngsu",
+      "action": "USER_REGISTER",
+      "details": "สมาชิกใหม่ลงทะเบียน: Phnidacngsu (phnidacngsu@gmail.com)",
+      "timestamp": "2026-09-17T07:07:43.363Z"
+    },
+    {
+      "id": "log-1789628795921-dcvu",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T07:06:35.921Z"
+    },
+    {
+      "id": "log-1789628793561-o2ta",
+      "userId": "user-1789628793560",
+      "userName": "Test User",
+      "action": "USER_REGISTER",
+      "details": "สมาชิกใหม่ลงทะเบียน: Test User (test@test.com)",
+      "timestamp": "2026-09-17T07:06:33.561Z"
+    },
+    {
+      "id": "log-1789628215155-6b94",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:56:55.155Z"
+    },
+    {
+      "id": "log-1789628213249-rehp",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Romantic",
+      "timestamp": "2026-09-17T06:56:53.249Z"
+    },
+    {
+      "id": "log-1789628210841-phbq",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:56:50.841Z"
+    },
+    {
+      "id": "log-1789628191364-toid",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:56:31.364Z"
+    },
+    {
+      "id": "log-1789628191347-atuj",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:56:31.347Z"
+    },
+    {
+      "id": "log-1789627565657-0bz3",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Casual",
+      "timestamp": "2026-09-17T06:46:05.657Z"
+    },
+    {
+      "id": "log-1789627558028-ynv0",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:45:58.028Z"
+    },
+    {
+      "id": "log-1789627558002-mxq2",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:45:58.002Z"
+    },
+    {
+      "id": "log-1789627552901-vrbi",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันเสาร์ แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:45:52.901Z"
+    },
+    {
+      "id": "log-1789626874261-a1zh",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันเสาร์ แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:34:34.261Z"
+    },
+    {
+      "id": "log-1789626858985-kzz1",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:34:18.985Z"
+    },
+    {
+      "id": "log-1789626858970-6v5e",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:34:18.970Z"
+    },
+    {
+      "id": "log-1789626850082-q4us",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันศุกร์ แต่งวันวันศุกร์ สไตล์ Sport",
+      "timestamp": "2026-09-17T06:34:10.082Z"
+    },
+    {
+      "id": "log-1789626849668-64jz",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันศุกร์ แต่งวันวันศุกร์ สไตล์ Sport",
+      "timestamp": "2026-09-17T06:34:09.668Z"
+    },
+    {
+      "id": "log-1789626849459-yxql",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันศุกร์ แต่งวันวันศุกร์ สไตล์ Sport",
+      "timestamp": "2026-09-17T06:34:09.459Z"
+    },
+    {
+      "id": "log-1789626848817-qui2",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันศุกร์ แต่งวันวันศุกร์ สไตล์ Sport",
+      "timestamp": "2026-09-17T06:34:08.817Z"
+    },
+    {
+      "id": "log-1789626847764-qu2y",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันศุกร์ แต่งวันวันศุกร์ สไตล์ Sport",
+      "timestamp": "2026-09-17T06:34:07.764Z"
+    },
+    {
+      "id": "log-1789626838890-w671",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันศุกร์ แต่งวันวันศุกร์ สไตล์ Sport",
+      "timestamp": "2026-09-17T06:33:58.890Z"
+    },
+    {
+      "id": "log-1789626572777-tggq",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:29:32.777Z"
+    },
+    {
+      "id": "log-1789626572775-oyfr",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:29:32.775Z"
+    },
+    {
+      "id": "log-1789626556786-xt0u",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:29:16.786Z"
+    },
+    {
+      "id": "log-1789626556774-5g5h",
+      "action": "OUTFIT_MATCH",
+      "details": "แมทช์ชุด: เกิดวันวันพุธ (กลางวัน) แต่งวันวันพฤหัสบดี สไตล์ Minimal",
+      "timestamp": "2026-09-17T06:29:16.774Z"
+    },
     {
       "id": "log-1789626434654-kgoz",
       "action": "OUTFIT_MATCH",

@@ -3,6 +3,7 @@ import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import { db } from './server/db';
 import { getDayOfWeekFromDate, runMatchingEngine } from './server/matchingEngine';
+import { SEED_COLOR_RULES } from './src/data/seedRules';
 import { ColorRule, DayOfWeekKey, OccasionOption, StyleOption } from './src/types';
 
 const app = express();
@@ -35,69 +36,107 @@ app.get('/api/health', (req, res) => {
 // 2. AUTHENTICATION & PROFILES
 // ==========================================
 app.post('/api/auth/register', (req, res) => {
-  const { name, email, password, birthday, birthDayOfWeek, gender, preferredStyle } = req.body;
+  try {
+    const { name, email, password, birthday, birthDayOfWeek, gender, preferredStyle } = req.body || {};
 
-  if (!email || !password || !name) {
-    return res.status(400).json({ error: 'กรุณากรอกข้อมูลชื่อ อีเมล และรหัสผ่านให้ครบถ้วน' });
+    const cleanEmail = (email || '').trim().toLowerCase();
+    const cleanName = (name || '').trim();
+    const cleanPassword = (password || '').trim();
+
+    if (!cleanEmail || !cleanPassword || !cleanName) {
+      return res.status(400).json({ error: 'กรุณากรอกข้อมูลชื่อ อีเมล และรหัสผ่านให้ครบถ้วน' });
+    }
+
+    if (cleanPassword.length < 4) {
+      return res.status(400).json({ error: 'รหัสผ่านต้องมีความยาวอย่างน้อย 4 ตัวอักษร' });
+    }
+
+    const database = db.get();
+    const existing = database.users.find((u) => u.email.toLowerCase() === cleanEmail);
+    if (existing) {
+      // If user provided the same password as existing account, log them in automatically!
+      if (existing.passwordHash === cleanPassword) {
+        const { passwordHash, ...safeUser } = existing;
+        return res.json({
+          success: true,
+          user: safeUser,
+          message: 'เข้าสู่ระบบด้วยบัญชีเดิมเรียบร้อยแล้ว',
+        });
+      }
+      return res.status(400).json({
+        error: 'อีเมลนี้ถูกลงทะเบียนไว้แล้ว กรุณาเข้าสู่ระบบ หรือใช้รหัสผ่านที่ถูกต้อง',
+      });
+    }
+
+    const determinedDayKey =
+      birthDayOfWeek || (birthday ? getDayOfWeekFromDate(birthday) : 'sunday');
+
+    const newUser = {
+      id: 'user-' + Date.now(),
+      name: cleanName,
+      email: cleanEmail,
+      passwordHash: cleanPassword,
+      role: 'user' as const,
+      birthday: birthday || '',
+      birthDayOfWeek: determinedDayKey as DayOfWeekKey,
+      gender: gender || 'unspecified',
+      preferredStyle: (preferredStyle as StyleOption) || 'Minimal',
+      favoriteColors: [],
+      dislikedColors: [],
+      status: 'active' as const,
+      createdAt: new Date().toISOString(),
+      lastActive: new Date().toISOString(),
+    };
+
+    database.users.push(newUser);
+    db.save();
+    db.logActivity(
+      'USER_REGISTER',
+      `สมาชิกใหม่ลงทะเบียน: ${cleanName} (${cleanEmail})`,
+      newUser.id,
+      cleanName
+    );
+
+    // Exclude password in response
+    const { passwordHash, ...safeUser } = newUser;
+    res.json({ success: true, user: safeUser });
+  } catch (err: any) {
+    console.error('Registration error:', err);
+    res.status(500).json({ error: 'ไม่สามารถลงทะเบียนได้ในขณะนี้: ' + (err.message || 'Unknown') });
   }
-
-  const database = db.get();
-  const existing = database.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-  if (existing) {
-    return res.status(400).json({ error: 'อีเมลนี้ถูกใช้งานในระบบแล้ว' });
-  }
-
-  const determinedDayKey = birthDayOfWeek || (birthday ? getDayOfWeekFromDate(birthday) : 'sunday');
-
-  const newUser = {
-    id: 'user-' + Date.now(),
-    name,
-    email: email.toLowerCase(),
-    passwordHash: password,
-    role: 'user' as const,
-    birthday: birthday || '',
-    birthDayOfWeek: determinedDayKey as DayOfWeekKey,
-    gender: gender || 'unspecified',
-    preferredStyle: (preferredStyle as StyleOption) || 'Minimal',
-    favoriteColors: [],
-    dislikedColors: [],
-    status: 'active' as const,
-    createdAt: new Date().toISOString(),
-    lastActive: new Date().toISOString(),
-  };
-
-  database.users.push(newUser);
-  db.save();
-  db.logActivity('USER_REGISTER', `สมาชิกใหม่ลงทะเบียน: ${name} (${email})`, newUser.id, name);
-
-  // Exclude password in response
-  const { passwordHash, ...safeUser } = newUser;
-  res.json({ success: true, user: safeUser });
 });
 
 app.post('/api/auth/login', (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ error: 'กรุณากรอกอีเมลและรหัสผ่าน' });
+  try {
+    const { email, password } = req.body || {};
+    const cleanEmail = (email || '').trim().toLowerCase();
+    const cleanPassword = (password || '').trim();
+
+    if (!cleanEmail || !cleanPassword) {
+      return res.status(400).json({ error: 'กรุณากรอกอีเมลและรหัสผ่าน' });
+    }
+
+    const database = db.get();
+    const user = database.users.find((u) => u.email.toLowerCase() === cleanEmail);
+
+    if (!user || user.passwordHash !== cleanPassword) {
+      return res.status(401).json({ error: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง' });
+    }
+
+    if (user.status === 'disabled') {
+      return res.status(403).json({ error: 'บัญชีนี้ถูกระงับการใช้งาน กรุณาติดต่อผู้ดูแลระบบ' });
+    }
+
+    user.lastActive = new Date().toISOString();
+    db.save();
+    db.logActivity('USER_LOGIN', `ผู้ใช้งานเข้าสู่ระบบ: ${user.name} (${user.email})`, user.id, user.name);
+
+    const { passwordHash, ...safeUser } = user;
+    res.json({ success: true, user: safeUser });
+  } catch (err: any) {
+    console.error('Login error:', err);
+    res.status(500).json({ error: 'เข้าสู่ระบบไม่สำเร็จ: ' + (err.message || 'Unknown') });
   }
-
-  const database = db.get();
-  const user = database.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-
-  if (!user || user.passwordHash !== password) {
-    return res.status(401).json({ error: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง' });
-  }
-
-  if (user.status === 'disabled') {
-    return res.status(403).json({ error: 'บัญชีนี้ถูกระงับการใช้งาน กรุณาติดต่อผู้ดูแลระบบ' });
-  }
-
-  user.lastActive = new Date().toISOString();
-  db.save();
-  db.logActivity('USER_LOGIN', `เข้าสู่ระบบสำเร็จ: ${user.name} (${user.role})`, user.id, user.name);
-
-  const { passwordHash, ...safeUser } = user;
-  res.json({ success: true, user: safeUser });
 });
 
 app.get('/api/auth/me', (req, res) => {
@@ -166,64 +205,90 @@ app.get('/api/rules', (req, res) => {
 // 4. COLOR MATCHING ENGINE
 // ==========================================
 app.post('/api/match', (req, res) => {
-  const {
-    birthday,
-    birthDayOfWeek,
-    targetDate,
-    occasion = 'วันสบาย ๆ',
-    style = 'Minimal',
-    preferredColors = [],
-    userId,
-  } = req.body;
+  try {
+    const {
+      birthday,
+      birthDayOfWeek,
+      targetDate,
+      occasion = 'วันสบาย ๆ',
+      style = 'Minimal',
+      preferredColors = [],
+      userId,
+    } = req.body || {};
 
-  const effectiveTargetDate = targetDate || new Date().toISOString().split('T')[0];
-  let effectiveBirthDayKey: DayOfWeekKey = 'sunday';
+    const effectiveTargetDate = targetDate || new Date().toISOString().split('T')[0];
+    let effectiveBirthDayKey: DayOfWeekKey = 'sunday';
 
-  if (birthDayOfWeek) {
-    effectiveBirthDayKey = birthDayOfWeek;
-  } else if (birthday) {
-    effectiveBirthDayKey = getDayOfWeekFromDate(birthday);
+    if (birthDayOfWeek) {
+      effectiveBirthDayKey = birthDayOfWeek;
+    } else if (birthday) {
+      effectiveBirthDayKey = getDayOfWeekFromDate(birthday);
+    }
+
+    const database = db.get();
+    const rulesToUse =
+      database.colorRules && database.colorRules.length > 0
+        ? database.colorRules
+        : SEED_COLOR_RULES;
+
+    const result = runMatchingEngine(
+      effectiveBirthDayKey,
+      effectiveTargetDate,
+      rulesToUse,
+      occasion as OccasionOption,
+      style as StyleOption,
+      preferredColors
+    );
+
+    // Record history
+    try {
+      const historyEntry = {
+        id: 'match-' + Date.now(),
+        userId: userId || 'anonymous',
+        birthDayOfWeek: effectiveBirthDayKey,
+        targetDate: effectiveTargetDate,
+        targetDayOfWeek: result.targetDayOfWeek,
+        style: style,
+        occasion: occasion,
+        combinationId: result.combinations[0]?.id || '',
+        topColor: result.combinations[0]?.items.top.hexCode || '#4A90E2',
+        bottomColor: result.combinations[0]?.items.bottom.hexCode || '#FFFFFF',
+        score: result.combinations[0]?.score || 95,
+        timestamp: new Date().toISOString(),
+      };
+
+      database.matchHistory.unshift(historyEntry);
+      if (database.matchHistory.length > 500) {
+        database.matchHistory = database.matchHistory.slice(0, 500);
+      }
+      db.save();
+
+      db.logActivity(
+        'OUTFIT_MATCH',
+        `แมทช์ชุด: เกิดวัน${result.birthDayInfo.thaiName} แต่งวัน${result.targetDayInfo.thaiName} สไตล์ ${style}`,
+        userId
+      );
+    } catch (logErr) {
+      // ignore logging error so match result is still sent
+    }
+
+    res.json(result);
+  } catch (err: any) {
+    console.error('Error in /api/match:', err);
+    try {
+      const fallbackResult = runMatchingEngine(
+        (req.body?.birthDayOfWeek || 'sunday') as DayOfWeekKey,
+        req.body?.targetDate || new Date().toISOString().split('T')[0],
+        SEED_COLOR_RULES,
+        req.body?.occasion || 'วันสบาย ๆ',
+        req.body?.style || 'Minimal',
+        req.body?.preferredColors || []
+      );
+      res.json(fallbackResult);
+    } catch (finalErr: any) {
+      res.status(500).json({ error: 'ไม่สามารถประมวลผลการจัดชุดได้: ' + (err.message || 'Unknown') });
+    }
   }
-
-  const database = db.get();
-  const result = runMatchingEngine(
-    effectiveBirthDayKey,
-    effectiveTargetDate,
-    database.colorRules,
-    occasion as OccasionOption,
-    style as StyleOption,
-    preferredColors
-  );
-
-  // Record history
-  const historyEntry = {
-    id: 'match-' + Date.now(),
-    userId: userId || 'anonymous',
-    birthDayOfWeek: effectiveBirthDayKey,
-    targetDate: effectiveTargetDate,
-    targetDayOfWeek: result.targetDayOfWeek,
-    style: style,
-    occasion: occasion,
-    combinationId: result.combinations[0]?.id || '',
-    topColor: result.combinations[0]?.items.top.hexCode || '#4A90E2',
-    bottomColor: result.combinations[0]?.items.bottom.hexCode || '#FFFFFF',
-    score: result.combinations[0]?.score || 95,
-    timestamp: new Date().toISOString(),
-  };
-
-  database.matchHistory.unshift(historyEntry);
-  if (database.matchHistory.length > 500) {
-    database.matchHistory = database.matchHistory.slice(0, 500);
-  }
-  db.save();
-
-  db.logActivity(
-    'OUTFIT_MATCH',
-    `แมทช์ชุด: เกิดวัน${result.birthDayInfo.thaiName} แต่งวัน${result.targetDayInfo.thaiName} สไตล์ ${style}`,
-    userId
-  );
-
-  res.json(result);
 });
 
 // ==========================================
